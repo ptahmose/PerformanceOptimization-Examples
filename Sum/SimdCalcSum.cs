@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -11,6 +12,39 @@ namespace Sum
     {
         public ulong CalcSum(ulong n)
         {
+            // Determine the SIMD vector size for ulong.
+            int vectorSize = Vector<ulong>.Count;
+
+            Vector<ulong> value = new Vector<ulong>(new ulong[] { 0, 1, 2, 3 });
+            Vector<ulong> summand = new Vector<ulong>(new ulong[] { 4, 4, 4, 4 });
+
+            // Total count of numbers from 0 to n inclusive.
+            ulong totalCount = n + 1;
+            // Compute the upper bound for the vectorized loop.
+            ulong limit = totalCount - (totalCount % (ulong)vectorSize);
+
+            Vector<ulong> vectorSum = Vector<ulong>.Zero;
+            ulong count = 0;
+            for (; count < limit; count += (ulong)vectorSize)
+            {
+                vectorSum = Vector.Add(vectorSum, value);
+                value = Vector.Add(value, summand);
+            }
+
+            // Reduce the vector sum into a scalar.
+            ulong sum = 0;
+            for (int j = 0; j < vectorSize; j++)
+            {
+                sum += vectorSum[j];
+            }
+
+            // Process any remaining elements.
+            for (; count < totalCount; count++)
+            {
+                sum += count;
+            }
+
+            /*
             // Determine the SIMD vector size for ulong.
             int vectorSize = Vector<ulong>.Count;
             Vector<ulong> vectorSum = Vector<ulong>.Zero;
@@ -52,7 +86,7 @@ namespace Sum
             for (; count < totalCount; count++)
             {
                 sum += count;
-            }
+            }*/
 
             return sum;
         }
