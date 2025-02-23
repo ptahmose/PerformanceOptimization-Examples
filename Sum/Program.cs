@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Numerics;
 
 namespace Sum
 {
@@ -6,6 +7,8 @@ namespace Sum
     {
         static void Main(string[] args)
         {
+            Console.WriteLine($"Vector<ulong>.Count = {Vector<ulong>.Count}");
+
             const int repeatCount = 3;
             const ulong n = 3_000_000_000;
 
