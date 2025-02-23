@@ -15,8 +15,14 @@ namespace Sum
             // Determine the SIMD vector size for ulong.
             int vectorSize = Vector<ulong>.Count;
 
-            Vector<ulong> value = new Vector<ulong>(new ulong[] { 0, 1, 2, 3 });
-            Vector<ulong> summand = new Vector<ulong>(new ulong[] { 4, 4, 4, 4 });
+            ulong[] initalizationValues = new ulong[vectorSize];
+            for (int i = 0; i < vectorSize; i++)
+            {
+                initalizationValues[i] = (ulong)i;
+            }
+
+            Vector<ulong> value = new Vector<ulong>(initalizationValues);
+            Vector<ulong> summand = new Vector<ulong>((ulong)vectorSize);//new ulong[] { 4, 4, 4, 4 });
 
             // Total count of numbers from 0 to n inclusive.
             ulong totalCount = n + 1;

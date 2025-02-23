@@ -9,8 +9,8 @@ namespace Sum
         {
             Console.WriteLine($"Vector<ulong>.Count = {Vector<ulong>.Count}");
 
-            const int repeatCount = 3;
-            const ulong n = 3_000_000_000;
+            const int repeatCount = 2;
+            const ulong n = 4_000_000_000;
 
             ICalcSum calcSum = new NaiveCalcSum();
             ulong sum = 0;
@@ -21,7 +21,7 @@ namespace Sum
             }
 
             stopwatch.Stop();
-            Console.WriteLine("NaiveCalcSum: {0} time: {1}s", sum, stopwatch.Elapsed.Seconds);
+            Console.WriteLine($"NaiveCalcSum: {sum} time: {stopwatch.Elapsed.TotalSeconds:F2}s");
 
             calcSum = new SimdCalcSum();
             stopwatch = Stopwatch.StartNew();
@@ -31,7 +31,18 @@ namespace Sum
             }
 
             stopwatch.Stop();
-            Console.WriteLine("NaiveCalcSum: {0} time: {1}s", sum, stopwatch.Elapsed.Seconds);
+            Console.WriteLine($"NaiveCalcSum: {sum} time: {stopwatch.Elapsed.TotalSeconds:F2}s");
+
+            calcSum = new CalcSumAlg();
+            stopwatch = Stopwatch.StartNew();
+            for (int i = 0; i < repeatCount; i++)
+            {
+                sum = calcSum.CalcSum(n);
+            }
+
+            stopwatch.Stop();
+            Console.WriteLine($"AlgCalcSum: {sum} time: {stopwatch.Elapsed.TotalSeconds:F2}s");
+
         }
     }
 }
