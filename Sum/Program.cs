@@ -1,8 +1,8 @@
-﻿using System.Diagnostics;
-using System.Numerics;
-
-namespace Sum
+﻿namespace Sum
 {
+    using System.Diagnostics;
+    using System.Numerics;
+
     internal class Program
     {
         static void Main(string[] args)
@@ -31,7 +31,7 @@ namespace Sum
             }
 
             stopwatch.Stop();
-            Console.WriteLine($"NaiveCalcSum: {sum} time: {stopwatch.Elapsed.TotalSeconds:F2}s");
+            Console.WriteLine($"SIMDCalcSum: {sum} time: {stopwatch.Elapsed.TotalSeconds:F2}s");
 
             calcSum = new CalcSumAlg();
             stopwatch = Stopwatch.StartNew();
