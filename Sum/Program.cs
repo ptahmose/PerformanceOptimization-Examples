@@ -43,6 +43,16 @@
             stopwatch.Stop();
             Console.WriteLine($"AlgCalcSum: {sum} time: {stopwatch.Elapsed.TotalSeconds:F2}s");
 
+            calcSum = new ParallelCalcSum();
+            stopwatch = Stopwatch.StartNew();
+            for (int i = 0; i < repeatCount; i++)
+            {
+                sum = calcSum.CalcSum(n);
+            }
+
+            stopwatch.Stop();
+            Console.WriteLine($"ParallelCalcSum: {sum} time: {stopwatch.Elapsed.TotalSeconds:F2}s");
+
         }
     }
 }
